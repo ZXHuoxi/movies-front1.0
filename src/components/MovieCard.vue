@@ -1,11 +1,13 @@
 <template>
   <a-card 
     hoverable 
-    style="height: 100%; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); transition: all 0.3s ease;"
+    class="movie-card"
+    style="height: 100%;"
   >
     <template #cover>
-      <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        <span style="color: white; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+      <div style="height: 200px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.3);"></div>
+        <span style="color: white; font-size: 24px; font-weight: bold; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); position: relative; z-index: 1;">
           {{ movie.movie_name }}
         </span>
       </div>

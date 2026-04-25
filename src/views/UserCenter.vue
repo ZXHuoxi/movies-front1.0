@@ -29,11 +29,13 @@
             />
 
             <!-- 搜索框 -->
-            <SearchBar 
-              v-model="searchKeyword" 
-              @search="handleSearch" 
-              @clear="handleClearSearch"
-            />
+            <div class="search-container">
+              <SearchBar 
+                v-model="searchKeyword" 
+                @search="handleSearch" 
+                @clear="handleClearSearch"
+              />
+            </div>
 
             <!-- 电影卡片展示 -->
              <!-- 自带的加载动画 -->
@@ -94,8 +96,6 @@
               :user-info="userInfo" 
               :loading="userInfoLoading"
             />
-
-
           </div>
         </div>
       </a-layout-content>
@@ -155,8 +155,6 @@ const loadUserInfo = async () => {
     userInfoLoading.value = false;
   }
 };
-
-
 
 // 轮播图
 const carouselImages = ref([
@@ -220,10 +218,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* 面包屑优化 */
+/* 面包屑优化：把文字调明显 */
 .ant-breadcrumb {
-  font-size: 14px;
-  opacity: 0.7;
+  font-size: 16px !important;
+  opacity: 1 !important;
+  font-weight: 500 !important;
+}
+.ant-breadcrumb :deep(.ant-breadcrumb-item) {
+  color: #333 !important;
+}
+.ant-breadcrumb :deep(.ant-breadcrumb-separator) {
+  color: #999 !important;
 }
 
 /* 内容容器优化：加柔和圆角+高级阴影+光泽感背景 */
@@ -250,14 +255,24 @@ onMounted(async () => {
 /* 图表卡片标题 */
 h2, h3 {
   font-weight: 600;
-  color: #1a1a1a;
+  color: #333 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  letter-spacing: 1px !important;
 }
 
 /* 电影卡片加载时的骨架感优化 */
 .ant-spin-container {
   min-height: 200px;
 }
+.search-container {
+  margin: -10px 0 20px 0;
+  position: relative;
+  top: -10px;
+}
 
+.SearchBar{
+  margin-bottom: 20px;
+}
 /* 空状态优化 */
 .ant-empty {
   opacity: 0.6;
