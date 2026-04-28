@@ -1,7 +1,7 @@
 <template>
   <a-spin :spinning="loading">
     <div v-if="userInfo" style="max-width: 600px;">
-      <div style="border: 1px solid #e8e8e8; border-radius: 4px; padding: 24px;">
+      <div style=" padding: 24px;   background-color: #ffffff; ">
         <div style="margin-bottom: 16px;">
           <span style="font-weight: bold; display: inline-block; width: 80px;">用户名：</span>
           <span>{{ userInfo.username || '无' }}</span>
@@ -44,3 +44,4 @@ const props = defineProps<{
   loading: boolean;
 }>();
 </script>
+

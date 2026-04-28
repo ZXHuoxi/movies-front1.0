@@ -4,7 +4,7 @@
       <a-breadcrumb-item>用户管理</a-breadcrumb-item>
       <a-breadcrumb-item>添加用户</a-breadcrumb-item>
     </a-breadcrumb>
-    <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+    <div :style="{ padding: '24px', minHeight: '360px' }">
       <a-form @submit.prevent="handleAddUser" layout="vertical">
         <a-form-item label="用户名" required>
           <a-input v-model:value="newUser.username" placeholder="请输入用户名" />
@@ -28,7 +28,7 @@
   </a-radio-group>
 </a-form-item>
         <a-form-item>
-          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <div style="display: flex; justify-content: flex-end; gap: 12px; align-items: center;">
             <a-button size="default" style="width: 100px;" @click="emit('close')">取消</a-button>
             <a-button size="default" type="primary" style="width: 100px;" html-type="submit">添加用户</a-button>
           </div>

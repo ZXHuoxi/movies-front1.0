@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// 注册请求
+//  用户注册
 async function register(username: string, password: string, confirmPassword: string, name: string, phone: string, email: string) {
   try {
     const response = await axios.post("/api/register", {

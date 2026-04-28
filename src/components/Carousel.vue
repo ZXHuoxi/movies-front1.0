@@ -99,7 +99,7 @@ const next = () => {
   transform: translateY(-50%) scale(1.1);
 }
 
-/* ========== 指示器：正常可用 + 好看 ========== */
+/* ========== 指示器 ========== */
 .full-carousel :deep(.slick-dots) {
   bottom: 18px;
 }
@@ -111,7 +111,7 @@ const next = () => {
   opacity: 1;
 }
 .full-carousel :deep(.slick-dots li.slick-active button) {
-  background: #fff;
+  background: #ffffff;
   width: 24px;
   border-radius: 6px;
 }

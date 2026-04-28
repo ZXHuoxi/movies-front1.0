@@ -10,7 +10,7 @@ import { getGenreStats } from '../api/analysisApi';
 const chartRef = ref<HTMLElement>();
 let myChart: echarts.ECharts | null = null;
 
-// 柔和渐变色（适合浅色背景，保持明亮但不过艳）
+// 设置饼图每个区域的颜
 const getGradientColors = () => {
   return [
     { type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
@@ -40,11 +40,107 @@ const handleResize = () => {
   myChart?.resize();
 };
 
-onMounted(async () => {
+onMounted(() => {
   if (!chartRef.value) return;
 
   myChart = echarts.init(chartRef.value);
 
+  // 先显示空图表
+  myChart.setOption({
+    backgroundColor: '#f8f9fc',
+    title: {
+      text: '🎬 电影类型分布',
+      left: 'center',
+      top: 20,
+      textStyle: {
+        fontSize: 20,
+        fontWeight: '500',
+        color: '#2c3e50',
+        textShadow: '0 2px 4px rgba(0,0,0,0.05)'
+      }
+    },
+    // 鼠标悬浮提示
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(255,255,255,0.95)',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      textStyle: { color: '#2c3e50', fontSize: 14 },
+      formatter: (params: any) => {
+        return `<strong>${params.name}</strong><br/>
+                数量：${params.value}<br/>
+                占比：${params.percent.toFixed(2)}%`;
+      }
+    },
+    // toolbox
+    toolbox: {
+      show: true,
+      feature: {
+        dataView: { show: true, readOnly: false, title: '数据视图' },
+        restore: { show: true, title: '还原' },
+        saveAsImage: { show: true, title: '保存图片' }
+      },
+      right: 20,
+      top: 20,
+      iconStyle: { borderColor: '#aaa' }
+    },
+    series: [
+      {
+        name: '电影数量',
+        type: 'pie',
+        radius: ['35%', '70%'],
+        center: ['55%', '55%'],
+        roseType: 'area',
+        avoidLabelOverlap: false,
+        animation: false,
+        itemStyle: {
+          borderRadius: 12,
+          borderWidth: 0,
+          shadowBlur: 18,
+          shadowColor: 'rgba(100, 100, 150, 0.35)',
+          shadowOffsetX: 2,
+          shadowOffsetY: 2
+        },
+        label: {
+          show: true,
+          position: 'outside',
+          formatter: '{b} : {d}%',
+          color: '#2c3e50',
+          fontWeight: '500',
+          textShadowBlur: 4,
+          textShadowColor: 'rgba(255,255,255,0.8)'
+        },
+        labelLine: {
+          length: 10,
+          length2: 15,
+          smooth: true,
+          lineStyle: { color: '#aaa', width: 1.5 }
+        },
+        emphasis: {
+          scale: true,
+          scaleSize: 12,
+          itemStyle: {
+            shadowBlur: 28,
+            shadowColor: 'rgba(180, 150, 80, 0.5)',
+            borderWidth: 0,
+          },
+          label: { show: true, fontWeight: 'bold', fontSize: 16 }
+        },
+        data: []
+      }
+    ]
+  });
+
+  // 异步加载数据
+  loadChartData();
+
+  window.addEventListener('resize', handleResize);
+});
+
+// 加载图表数据
+const loadChartData = async () => {
+  if (!myChart) return;
+  
   try {
     // 优化：使用缓存，避免重复请求
     let genreStatsData: any[] = [];
@@ -67,10 +163,6 @@ onMounted(async () => {
     }
 
     if (genreStatsData.length === 0) {
-      myChart.setOption({
-        title: { text: '电影类型分布', left: 'center', top: 20 },
-        series: [{ name: '电影数量', type: 'pie', radius: ['40%', '65%'], data: [] }]
-      });
       return;
     }
 
@@ -84,97 +176,16 @@ onMounted(async () => {
       };
     });
 
-    const option = {
-      backgroundColor: '#f8f9fc',
-      title: {
-        text: '🎬 电影类型分布',
-        left: 'center',
-        top: 20,
-        textStyle: {
-          fontSize: 20,
-          fontWeight: '500',
-          color: '#2c3e50',
-          textShadow: '0 2px 4px rgba(0,0,0,0.05)'
-        }
-      },
-      // 鼠标悬浮提示
-      tooltip: {
-        trigger: 'item',
-        backgroundColor: 'rgba(255,255,255,0.95)',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        textStyle: { color: '#2c3e50', fontSize: 14 },
-        formatter: (params: any) => {
-          return `<strong>${params.name}</strong><br/>
-                  数量：${params.value}<br/>
-                  占比：${params.percent.toFixed(2)}%`;
-        }
-      },
-      // toolbox
-      toolbox: {
-        show: true,
-        feature: {
-          dataView: { show: true, readOnly: false, title: '数据视图' },
-          restore: { show: true, title: '还原' },
-          saveAsImage: { show: true, title: '保存图片' }
-        },
-        right: 20,
-        top: 20,
-        iconStyle: { borderColor: '#aaa' }
-      },
+    myChart.setOption({
       series: [
         {
-          name: '电影数量',
-          type: 'pie',
-          radius: ['35%', '70%'],
-          center: ['55%', '55%'],
-          roseType: 'area',
-          avoidLabelOverlap: false,
-          animation: false,
-          itemStyle: {
-            borderRadius: 12,
-            borderWidth: 0,
-            shadowBlur: 18,
-            shadowColor: 'rgba(100, 100, 150, 0.35)',
-            shadowOffsetX: 2,
-            shadowOffsetY: 2
-          },
-          label: {
-            show: true,
-            position: 'outside',
-            formatter: '{b} : {d}%',
-            color: '#2c3e50',
-            fontWeight: '500',
-            textShadowBlur: 4,
-            textShadowColor: 'rgba(255,255,255,0.8)'
-          },
-          labelLine: {
-            length: 10,
-            length2: 15,
-            smooth: true,
-            lineStyle: { color: '#aaa', width: 1.5 }
-          },
-          emphasis: {
-            scale: true,
-            scaleSize: 12,
-            itemStyle: {
-              shadowBlur: 28,
-              shadowColor: 'rgba(180, 150, 80, 0.5)',
-              borderWidth: 0,
-            },
-            label: { show: true, fontWeight: 'bold', fontSize: 16 }
-          },
           data: pieData
         }
       ]
-    };
-
-    myChart.setOption(option);
-
-    window.addEventListener('resize', handleResize);
+    });
   } catch (error) {
   }
-});
+};
 // Vue 组件销毁时的清理工作
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
