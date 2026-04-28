@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 // 添加用户
 async function addUser(username: string, password: string, name: string, phone: string, email: string, role: string) {
   try {
@@ -58,8 +59,9 @@ async function getUsers(page: number = 1, size: number = 15) {
 }
 
 /**
- 根据用户名获取用户信息
-
+ * 根据用户名获取用户信息
+ * @param username 用户名
+ * @returns 用户信息数据
  */
 async function getUserInfo(username: string) {
   const response = await axios.get(`/api/admin/users`, {
@@ -75,7 +77,13 @@ async function getUserInfo(username: string) {
     throw new Error('未找到用户信息');
   }
 }
-//修改密码
+
+/**
+ * 修改密码
+ * @param oldPassword 旧密码
+ * @param newPassword 新密码
+ * @returns 修改密码响应数据
+ */
 async function changePassword(oldPassword: string, newPassword: string) {
   const response = await axios.post(`/api/user/change-password`, {
     old_password: oldPassword,
@@ -84,7 +92,11 @@ async function changePassword(oldPassword: string, newPassword: string) {
   return response.data;
 }
 
-//删除用户
+/**
+ * 删除用户
+ * @param id 用户ID
+ * @returns 删除用户响应数据
+ */
 async function deleteUser(id: number) {
   try {
     const response = await axios.post(`/api/auth/delete`, {
@@ -120,7 +132,15 @@ async function deleteUser(id: number) {
 }
 
 /**
- *更新用户信息
+ * 更新用户信息
+ * @param id 用户ID
+ * @param username 用户名
+ * @param password 密码
+ * @param name 姓名
+ * @param phone 手机号
+ * @param email 邮箱
+ * @param role 角色
+ * @returns 更新用户响应数据
  */
 async function updateUser(id: number, username: string, password: string, name: string, phone: string, email: string, role: string) {
   try {

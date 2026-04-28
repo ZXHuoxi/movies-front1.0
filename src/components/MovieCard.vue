@@ -2,7 +2,7 @@
   <a-card 
     hoverable 
     class="movie-card"
-    style="height: 100%;"
+    style="height: 100%;background: #ffffff;"
   >
     <template #cover>
       <div style="height: 200px; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
@@ -34,3 +34,8 @@ const props = defineProps<{
   movie: Movie;
 }>();
 </script>
+<style scoped>
+.movie-card {
+  background: #ffffff;
+}
+</style>

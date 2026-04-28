@@ -149,9 +149,10 @@ const handleResize = () => {
   chart?.resize();
 };
 
-onMounted(async () => {
+onMounted(() => {
   initChart();
-  await loadData();
+  // 先显示图表，再异步加载数据
+  loadData();
   window.addEventListener('resize', handleResize);
 });
 

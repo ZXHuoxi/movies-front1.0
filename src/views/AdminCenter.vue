@@ -1,12 +1,12 @@
 <template>
-  <a-layout style="min-height: 100vh">
+  <a-layout style="min-height: 100vh; background-color: #ffffff;">
     <Sidebar
       v-model:collapsed="collapsed" 
       v-model:selectedKeys="selectedKeys"
       type="admin"
     />
 
-    <a-layout>
+    <a-layout style="background-color: #ffffff;">
       <Header :current-user="currentUser" />
       <a-layout-content style="margin: 0 16px">
 
@@ -16,7 +16,7 @@
             <a-breadcrumb-item>用户管理</a-breadcrumb-item>
           </a-breadcrumb>
 
-          <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+          <div :style="{ padding: '24px', minHeight: '360px' }">
             <div style="margin-bottom: 16px">
               <a-button type="primary" @click="showAddUserModal = true">
                 添加用户
@@ -26,8 +26,8 @@
             <a-table :columns="userColumns" :data-source="userData" row-key="id">
               <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'actions'">
-                  <a-button type="primary" size="small" style="margin-right: 8px" @click="handleEditUser(record)">编辑</a-button>
-                  <a-button danger size="small" @click="handleDeleteUser(record)">删除</a-button>
+                  <a-button type="primary" size="default" style="margin-right: 8px" @click="handleEditUser(record)">编辑</a-button>
+                  <a-button danger size="default" @click="handleDeleteUser(record)">删除</a-button>
                 </template>
               </template>
             </a-table>
@@ -73,7 +73,7 @@
                     </a-radio-group>
                   </a-form-item>
                   <a-form-item>
-                    <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                    <div style="display: flex; justify-content: flex-end; gap: 12px; align-items: center;">
                       <a-button size="default" style="width: 100px;" @click="showEditUserModal = false">取消</a-button>
                       <a-button size="default" type="primary" style="width: 100px;" html-type="submit">保存</a-button>
                     </div>
